@@ -3,11 +3,11 @@ from os import environ, path
 
 class Env:
   _environ = {}
-  _cache = None
+  _cachepath = None
   def __init__(self, cache=None):
     if cache:
-      self._cache = cache
-      if path.exists(cache):
+      self._cachepath = cache
+      if path.exists(self._cachepath):
         self._read_cache()
     self.Sync()
 
@@ -41,17 +41,20 @@ class Env:
       environ[k] = self._environ[k]
     self._write_cache()
 
+  def SetCachePath(self, cachepath):
+    self._cachepath = cachepath
+
   def _read_cache(self):
-    if self._cache and path.exists(self._cache):
-      with open(self._cache, "rb") as f:
+    if self._cache and path.exists(self._cachepath):
+      with open(self._cachepath, "rb") as f:
         self._environ = load(f)
     else:
       raise Exception("Tried reading from non-existent environment cache")
 
   def _write_cache(self):
-    if self._cache:
-      if path.exists(path.dirname(self._cache)):
-        with open(self._cache, "wb") as f:
+    if self._cachepath:
+      if path.exists(path.dirname(self._cachepath)):
+        with open(self._cachepath, "wb") as f:
           dump(self._environ, f)
       else:
-        raise Exception("Could write to non-existent directory at %s" % self._cache)
+        raise Exception("Could write to non-existent directory at %s" % self._cachepath)
