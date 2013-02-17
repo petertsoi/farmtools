@@ -12,6 +12,9 @@ class Sandbox:
         timestamp = strftime("%Y%m%d%H%M%S", localtime())
       if user:
         self.name = "%(user)s_%(timestamp)s" % locals()
+      elif environ.has_key("FARM_JOBOWNER"):
+        user = environ["FARM_JOBOWNER"]
+        self.name = "%(user)s_%(timestamp)s" % locals()
       else: 
         self.name = "cnm_%(timestamp)s" % locals()
 
