@@ -7,20 +7,22 @@ import getopt
 from farmtools.FS.Sandbox import *
 
 def main(argv):
-  __doc__ = """cnm_gitcopy -t <timestamp> -u <user> -r <repo address> -c <commit SHA> -p <paths to copy>
-\t-t, --timestamp\ttimestamp to put on the sandbox
+  __doc__ = """cnm_gitcopy -u <user> -j <job id> -t <task id> -r <repo address> -c <commit SHA> -p <paths to copy>
 \t-u, --user\tjob owner
+\t-j, --jid\ttractor job id
+\t-t, --tid\ttractor task id
 \t-r, --repo\trepository address
 \t-c, --commit\tcommit SHA (default HEAD)
 \t-p, --paths\tpaths to copy (default ALL)
 """
   try:
-    opts, args = getopt.getopt(argv,"ht:u:r:c:p:",["timestamp=","user=","repo=","commit=","paths="])
+    opts, args = getopt.getopt(argv,"h:u:j:t:r:c:p:",["user=","jid=","tid=","repo=","commit=","paths="])
   except getopt.error, msg:
     print __doc__
     sys.exit(2)
-  timestamp = None
   user = None
+  jid = None
+  tid = None
   repoaddr = None
   commit = "HEAD"
   paths = None
@@ -28,10 +30,12 @@ def main(argv):
     if opt in ("-h", "--help"):
       print __doc__
       sys.exit(0)
-    elif opt in ("-t", "--timestamp"):
-      timestamp = arg
     elif opt in ("-u", "--user"):
       user = arg
+    elif opt in ("-j", "--jid"):
+      jid = arg
+    elif opt in ("-t", "--tid"):
+      tid = arg
     elif opt in ("-r", "--repo"):
       repoaddr = arg
     elif opt in ("-c", "--commit"):
@@ -39,11 +43,19 @@ def main(argv):
     elif opt in ("-p", "--paths"):
       paths = arg
 
-  if timestamp and user:
-    mybox = Sandbox(timestamp=timestamp, user=user)
-  elif timestamp and not user:
-    mybox = Sandbox(timestamp=timestamp)
-  elif not timestamp and user:
+  if user and jid and tid:
+    mybox = Sandbox(user=user, jid=jid, tid=tid)
+  elif user and jid and not tid:
+    mybox = Sandbox(user=user, jid=jid)
+  elif user and not jid and tid:
+    mybox = Sandbox(user=user, tid=tid)
+  elif not user and jid and tid:
+    mybox = Sandbox(jid=jid, tid=tid)
+  elif not user and not jid and tid:
+    mybox = Sandbox(tid=tid)
+  elif not user and jid and not tid:
+    mybox = Sandbox(jid=jid)
+  elif user and not jid and not tid:
     mybox = Sandbox(user=user)
   else:
     mybox = Sandbox()

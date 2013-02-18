@@ -7,32 +7,40 @@ import getopt
 from farmtools.FS.Sandbox import *
 
 def main(argv):
-  __doc__ = """cnm_createSandbox -t <timestamp> -u <user>
-\t-t, --timestamp\ttimestamp to put on the sandbox
-\t-u, --user\tjob owner
-"""
+  __doc__ = "cnm_createSandbox -u <user> -j <job id> -t <task id>"
   try:
-    opts, args = getopt.getopt(argv,"ht:u:",["timestamp=","user="])
+    opts, args = getopt.getopt(argv,"h:u:j:t:",["user=","jid=","tid="])
   except getopt.error, msg:
     print __doc__
     sys.exit(2)
-  timestamp = None
   user = None
+  jid = None
+  tid = None
   for opt, arg in opts:
     if opt in ("-h", "--help"):
       print __doc__
       sys.exit(0)
-    elif opt in ("-t", "--timestamp"):
-      timestamp = arg
     elif opt in ("-u", "--user"):
       user = arg
+    elif opt in ("-j", "--jid"):
+      jid = arg
+    elif opt in ("-t", "--tid"):
+      tid = arg
 
-  if timestamp and user:
-    mybox = Sandbox(timestamp=timestamp, user=user)
-  elif timestamp and not user:
-    mybox = Sandbox(timestamp=timestamp)
-  elif not timestamp and user:
-    mybox = Sandbox(user=user)
+  if user and jid and tid:
+    mybox = Sandbox(owner=user, jid=jid, tid=tid)
+  elif user and jid and not tid:
+    mybox = Sandbox(owner=user, jid=jid)
+  elif user and not jid and tid:
+    mybox = Sandbox(owner=user, tid=tid)
+  elif not user and jid and tid:
+    mybox = Sandbox(jid=jid, tid=tid)
+  elif not user and not jid and tid:
+    mybox = Sandbox(tid=tid)
+  elif not user and jid and not tid:
+    mybox = Sandbox(jid=jid)
+  elif user and not jid and not tid:
+    mybox = Sandbox(owner=user)
   else:
     mybox = Sandbox()
 
