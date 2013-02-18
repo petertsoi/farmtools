@@ -45,7 +45,7 @@ class Env:
     self._cachepath = cachepath
 
   def _read_cache(self):
-    if self._cache and path.exists(self._cachepath):
+    if self._cachepath and path.exists(self._cachepath):
       with open(self._cachepath, "rb") as f:
         self._environ = load(f)
     else:
