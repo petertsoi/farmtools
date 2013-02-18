@@ -22,6 +22,8 @@ class Sandbox:
     envpath = "%(sandboxpath)s.farmenv" % locals()
     if path.exists(envpath):
       self.env = Env(envpath)
+    else:
+      self.Create()
 
   def Create(self):
     sandboxpath = self.path
