@@ -4,15 +4,20 @@ from time import localtime, strftime
 from farmtools.Farm.Env import *
 
 class Sandbox:
-  def __init__(self, name=None, user=None):
+  def __init__(self, name=None, user=None, timestamp=None):
     self.env = Env()
     if name:
       self.name = name
     else:
-      timestamp = self.env.Get("FARM_JOBTIMESTAMP")
-      if not timestamp:
-        timestamp = strftime("%Y%m%d%H%M%S", localtime())
-      if not user:
+      if timestamp:
+        self.env.Put("FARM_JOBTIMESTAMP", timestamp)
+      else:
+        timestamp = self.env.Get("FARM_JOBTIMESTAMP")
+        if not timestamp:
+          timestamp = strftime("%Y%m%d%H%M%S", localtime())
+      if user:
+        self.env.Put("FARM_JOBOWNER", user)
+      else:
         user = self.env.Get("FARM_JOBOWNER")
         if not user: 
           user = "cnm"
