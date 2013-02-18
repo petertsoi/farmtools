@@ -10,6 +10,8 @@ def main(argv):
   __doc__ = """cnm_gitcopy -t <timestamp> -u <user> -r <repo address> -c <commit SHA>
 \t-t, --timestamp\ttimestamp to put on the sandbox
 \t-u, --user\tjob owner
+\t-r, --repo\trepository address
+\t-c, --commit\tcommit SHA (default HEAD)
 """
   try:
     opts, args = getopt.getopt(argv,"ht:u:r:c:",["timestamp=","user=","repo=","commit="])
