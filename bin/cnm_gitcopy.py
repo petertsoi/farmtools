@@ -15,7 +15,7 @@ def main(argv):
 \t-p, --paths\tpaths to copy (default ALL)
 """
   try:
-    opts, args = getopt.getopt(argv,"ht:u:r:c:p",["timestamp=","user=","repo=","commit=","paths="])
+    opts, args = getopt.getopt(argv,"ht:u:r:c:p:",["timestamp=","user=","repo=","commit=","paths="])
   except getopt.error, msg:
     print __doc__
     sys.exit(2)
@@ -50,7 +50,9 @@ def main(argv):
 
   if repoaddr:
     os.chdir(mybox.path)
-    os.system("git archive --format=tar --remote=%(repoaddr)s %(commit)s %(paths)s | tar xf -" % locals())
+    #os.system("git archive --format=tar --remote=%(repoaddr)s %(commit)s %(paths)s | tar xf -" % locals())
+    print("git archive --format=tar --remote=%(repoaddr)s %(commit)s %(paths)s | tar xf -" % locals())
+
 
 if __name__ == "__main__":
   main(sys.argv[1:])
