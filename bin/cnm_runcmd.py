@@ -7,9 +7,10 @@ import getopt
 from farmtools.FS.Sandbox import *
 
 def main(argv):
-  __doc__ = """cnm_createSandbox -t <timestamp> -u <user>
+  __doc__ = """cnm_runcmd -t <timestamp> -u <user> --command="<command>"
 \t-t, --timestamp\ttimestamp to put on the sandbox
 \t-u, --user\tjob owner
+\t--command\tcommand to run
 """
   try:
     opts, args = getopt.getopt(argv,"ht:u:",["timestamp=","user=","command="])
