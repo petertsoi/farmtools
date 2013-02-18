@@ -50,8 +50,7 @@ def main(argv):
 
   if repoaddr:
     os.chdir(mybox.path)
-    #os.system("git archive --format=tar --remote=%(repoaddr)s %(commit)s %(paths)s | tar xf -" % locals())
-    print("git archive --format=tar --remote=%(repoaddr)s %(commit)s %(paths)s | tar xf -" % locals())
+    os.system("git archive --format=tar --remote=%(repoaddr)s %(commit)s %(paths)s | tar xf -" % locals())
 
 
 if __name__ == "__main__":
