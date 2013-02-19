@@ -7,14 +7,14 @@ import getopt
 from farmtools.FS.Sandbox import *
 
 def main(argv):
-  __doc__ = """cnm_runcmd -u <owner> -j <job id> -t <task id> --command="<command>"
+  __doc__ = """cnm_runcmd -u <owner> -j <job id> -t <task id> -c <command>
   \t-u, --user\tjob owner
   \t-j, --jid\ttractor job id
   \t-t, --tid\ttractor task id
-  \t--command\tcommand to run
+  \t-c, --command\tcommand to run
   """
   try:
-    opts, args = getopt.getopt(argv,"h:u:j:t:",["user=","jid=","tid=","command="])
+    opts, args = getopt.getopt(argv,"h:u:j:t:c:",["user=","jid=","tid=","command="])
   except getopt.error, msg:
     print __doc__
     sys.exit(2)
@@ -32,7 +32,7 @@ def main(argv):
       jid = arg
     elif opt in ("-t", "--tid"):
       tid = arg
-    elif opt in ("--command"):
+    elif opt in ("-c", "--command"):
       command = arg
 
   if user and jid and tid:
@@ -54,6 +54,7 @@ def main(argv):
 
   if command:
     os.chdir(mybox.path)
+    print "Running %(command)" % locals()
     os.system(command)
 
 if __name__ == "__main__":

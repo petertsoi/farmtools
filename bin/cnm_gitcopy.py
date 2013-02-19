@@ -62,6 +62,7 @@ def main(argv):
 
   if repoaddr:
     os.chdir(mybox.path)
+    print("Running git archive --format=tar --remote=%(repoaddr)s %(commit)s %(p    aths)s | tar xf -" % locals())
     os.system("git archive --format=tar --remote=%(repoaddr)s %(commit)s %(paths)s | tar xf -" % locals())
 
 
