@@ -50,10 +50,11 @@ def main(argv):
 
   if outputdir:
     os.chdir(mybox.path)
-    if path.exists(path.join(mybox.path, outputdir)):
+    fullpath = os.path.join(mybox.path, outputdir)
+    if os.path.exists(fullpath):
       Cloud.UploadDir(outputdir)
     else:
-      raise Exception("Output directory does not exist")
+      raise Exception("Output directory does not exist: %s" % fullpath)
 
 
 if __name__ == "__main__":
