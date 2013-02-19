@@ -54,7 +54,7 @@ def main(argv):
 
   if command:
     os.chdir(mybox.path)
-    print "Running %(command)" % locals()
+    print "Running %(command)s" % locals()
     os.system(command)
 
 if __name__ == "__main__":
