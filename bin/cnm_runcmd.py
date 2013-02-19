@@ -54,7 +54,8 @@ def main(argv):
 
   if command:
     os.chdir(mybox.path)
-    print "Running %(command)s" % locals()
+    command = command.replace("#FARM_SANDBOX#", mybox.path)
+    print("Running %(command)s" % locals())
     os.system(command)
 
 if __name__ == "__main__":
