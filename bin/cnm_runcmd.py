@@ -14,7 +14,7 @@ def main(argv):
   \t--command\tcommand to run
   """
   try:
-    opts, args = getopt.getopt(argv,"h:u:j:t:",["user=","jid=","tid=","command"])
+    opts, args = getopt.getopt(argv,"h:u:j:t:",["user=","jid=","tid=","command="])
   except getopt.error, msg:
     print __doc__
     sys.exit(2)

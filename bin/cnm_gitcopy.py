@@ -44,11 +44,11 @@ def main(argv):
       paths = arg
 
   if user and jid and tid:
-    mybox = Sandbox(user=user, jid=jid, tid=tid)
+    mybox = Sandbox(owner=user, jid=jid, tid=tid)
   elif user and jid and not tid:
-    mybox = Sandbox(user=user, jid=jid)
+    mybox = Sandbox(owner=user, jid=jid)
   elif user and not jid and tid:
-    mybox = Sandbox(user=user, tid=tid)
+    mybox = Sandbox(owner=user, tid=tid)
   elif not user and jid and tid:
     mybox = Sandbox(jid=jid, tid=tid)
   elif not user and not jid and tid:
@@ -56,7 +56,7 @@ def main(argv):
   elif not user and jid and not tid:
     mybox = Sandbox(jid=jid)
   elif user and not jid and not tid:
-    mybox = Sandbox(user=user)
+    mybox = Sandbox(owner=user)
   else:
     mybox = Sandbox()
 
