@@ -52,6 +52,7 @@ def main(argv):
     os.chdir(mybox.path)
     fullpath = os.path.join(mybox.path, outputdir)
     if os.path.exists(fullpath):
+      print("Saving output directory %(fullpath)s to cloud" % locals())
       Cloud.UploadDir(outputdir)
     else:
       raise Exception("Output directory does not exist: %s" % fullpath)

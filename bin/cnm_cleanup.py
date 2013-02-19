@@ -43,7 +43,7 @@ def main(argv):
     mybox = Sandbox(owner=user)
   else:
     mybox = Sandbox()
-
+  print("Clean up sandbox %s" % mybox.path)
   mybox.Destroy()
 
 if __name__ == "__main__":
