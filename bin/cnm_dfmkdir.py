@@ -32,7 +32,9 @@ def main(argv):
       tid = arg
   
   if dfroot and user and jid and tid:
-    os.makedirs(path.join(dfroot, user, jid, tid))
+    dirpath = os.path.join(dfroot, user, jid, tid)
+    if not os.path.exists(dirpath):
+      os.makedirs(dirpath)
 
 if __name__ == "__main__":
   main(sys.argv[1:])
